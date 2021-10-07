@@ -119,7 +119,7 @@ frame_queue = queue.LifoQueue(5)
 lock = threading.Lock()
 frame_counter = 0
 
-# 取图像帧
+# 获取图像帧
 def retrieve_frames(cap):
     global frame_counter
 
@@ -147,13 +147,14 @@ def retrieve_frames(cap):
         lock.release()   # 释放锁
 
 
-for i in range(1):   # funny loop, haha
+# 使用一个守护进程，执行获取图像帧任务
+for i in range(1):   # simple and funny loop, haha
     retrieving_frames = True
     th_retrieve_frames = threading.Thread(
         target=retrieve_frames,
         name=f'thread-retrieve-{i}',
         kwargs={"cap": cap},
-        daemon=True   # 设置取图像帧的进程为守护进程
+        daemon=True
     )
 
     th_retrieve_frames.start()
@@ -168,7 +169,7 @@ detection_queue = queue.Queue()
 
 def handle_detections():
     """
-    Detecte specific classes, and save the detected images.
+    if necessary, save the detected frames according to specific classes
     """
 
     vehicles = [
@@ -207,6 +208,7 @@ def handle_detections():
         detection_queue.task_done()
 
 
+# 使用一个守护进程，执行保存图像帧任务
 th_detections = threading.Thread(
     target=handle_detections,
     name=f"thread-detect-{i}",
@@ -281,6 +283,3 @@ while True:
         # exit script
         print("Exiting script")
         sys.exit(0)
-
-        break
-
