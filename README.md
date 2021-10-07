@@ -2,9 +2,9 @@
 
 Record the walkthrough use of tfserving.
 
-- [Tensorflow Serving](tensorflow_serving_with_docker.md) shows you how to use TensorFlow Serving with Docker(CPU/GPU).
+- [Tensorflow Serving](docs/tensorflow_serving_with_docker.md) shows you how to use TensorFlow Serving with Docker(CPU/GPU).
 - [serving_basic](serving_basic.md) shows you how to use TensorFlow Serving components to export a trained TensorFlow model(as SavedModel format) and use a Docker serving image to easily load the model for serving.
-- [convert_model_to_TFserving](convert_model_to_TFserving.md)
+- [convert_model_to_TFserving](docs/convert_model_to_TFserving.md)
 
 ## Deploy a Tensorflow model wiht TF Serving
 
@@ -46,3 +46,31 @@ Record the walkthrough use of tfserving.
 - [darknet-tensorflow-serving](darknet-tensorflow-serving)
 - [tensorflow_serving_examples](https://github.com/percent4/tensorflow_serving_examples)
 
+
+github projects:
+- https://github.com/lbeaucourt/Object-detection
+- https://github.com/cristianpb/object-detection
+- https://github.com/LanderMoerkerke/camera-feed-object-detector-tf-serve
+
+### Client
+
+
+
+
+## Tips
+
+
+## TODO
+
+将coco label从pkl文件读写并保存
+
+
+
+client端的代码逻辑是不错的：
+- 提取视频帧有一个守护进程
+- 保存检测的视频帧有一个守护进程
+- 主程序执行预测处理
+
+优化：
+- tf serving需要warm up?
+- 应选择挂载保存在本地的模型的方式？
