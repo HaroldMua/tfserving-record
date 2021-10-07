@@ -1,6 +1,6 @@
 .idea
 
 # ignore all
-model
+tf-serve/model
 
 test.mp4
