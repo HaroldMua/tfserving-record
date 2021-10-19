@@ -47,10 +47,33 @@ Record the walkthrough use of tfserving.
 - [tensorflow_serving_examples](https://github.com/percent4/tensorflow_serving_examples)
 
 
-github projects:
+- [html5播放rtsp方案](https://blog.csdn.net/u014535295/article/details/99303890)
+
+## github projects:
+- [opencv-flask](https://github.com/DataXujing/OpenCV-Flask)
+  - 将目标检测程序生成为系统的动态链接库文件
+  - 用flask调用opencv和yolo-lite
+- [yolov5-flask-vue](https://github.com/Sharpiless/Yolov5-Flask-VUE)
+
 - https://github.com/lbeaucourt/Object-detection
-- https://github.com/cristianpb/object-detection
+- [object-detection](https://github.com/cristianpb/object-detection)
+  - [Blog](https://cristianpb.github.io/blog/ssd-yolo)
 - https://github.com/LanderMoerkerke/camera-feed-object-detector-tf-serve
+
+- [flask-video-streaming](https://github.com/miguelgrinberg/flask-video-streaming)
+  - [Blog](https://blog.miguelgrinberg.com/post/flask-video-streaming-revisited)
+  
+- [flask-opencv-streaming](https://github.com/desertfury/flask-opencv-streaming)
+
+- [opencv-stream-video-to-web](https://github.com/pornpasok/opencv-stream-video-to-web)
+
+- [live-video-stream](https://github.com/sgino209/live_video_stream)
+
+- [multi-camera-live-object-tracking](https://github.com/LeonLok/Multi-Camera-Live-Object-Tracking)
+
+
+
+
 
 ### Client
 
