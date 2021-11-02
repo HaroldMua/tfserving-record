@@ -1,4 +1,56 @@
-# TF Serving-Record
+# Multi-Camera Live Object Detection with Tensorflow Serving
+
+## 如何使用异步进程获取IP摄像头的视频流
+
+[ImageZMQ](https://github.com/jeffbass/imagezmq) 可以实现，多个sender(Raspberry Pi)的视频流发送至
+reciever(PC)。
+
+例如，可在多个Raspberry Pi运行以下代码，发送视频流：
+```
+from imutils.video import VideoStream
+import imagezmq
+import cv2
+import time
+
+cap = VideoStream(0).start()
+
+sender = imagezmq.ImageSender(connect_to='tcp://192.168.11.216:5555')  # change to IP address and port of server thread
+cam_id = 'Camera 1'  # this name will be displayed on the corresponding camera stream
+time.sleep(2)
+
+id = 0
+while True:
+    frame = cap.read()
+    sender.send_image(cam_id, frame)
+
+    id += 1
+    print("frame id: %d" % id)
+```
+
+在PC端运行以下代码，接收视频流：
+```
+import cv2
+import imagezmq
+
+image_hub = imagezmq.ImageHub()
+
+while True:  # show streamed images until Ctrl-C
+    rpi_name, image = image_hub.recv_image()
+    cv2.imshow(rpi_name, image)  # 1 window for each RPi
+
+    cv2.waitKey(1)
+    image_hub.send_reply(b'OK')
+
+```
+
+## 代码特点
+- 通过定义[config.ini](config.ini),读取Tensorflow Serving的URL配置信息
+- flask视频流的实现参考[flask-video-streaming](https://github.com/miguelgrinberg/flask-video-streaming),
+  该部分代码是python类之静态方法、类方法的优秀实现
+- 
+
+
+
 
 Record the walkthrough use of tfserving.
 

@@ -5,18 +5,21 @@ def expand_image(img):
     return np.expand_dims(img, axis=0)
 
 capture = cv2.VideoCapture(0)
+# capture = cv2.VideoCapture("test.mp4")
+
 while True:
     ret, frame = capture.read()
-    frame = cv2.flip(frame,1)   #镜像操作
+    # frame = cv2.flip(frame,1)   #镜像操作
+    # _HEIGHT, _WIDTH, _ = frame.shape
 
-    preprocessed_img = expand_image(frame)
+    # preprocessed_img = expand_image(frame)
 
-    cv2.imshow("video", preprocessed_img[0])
+    # cv2.imshow("video", preprocessed_img[0])
 
     cv2.imshow("frame", frame)
 
     key = cv2.waitKey(50)
     print(key)
-    if key  == ord('q'):  #判断是哪一个键按下
+    if key == ord('q'):  #判断是哪一个键按下
         break
 cv2.destroyAllWindows()

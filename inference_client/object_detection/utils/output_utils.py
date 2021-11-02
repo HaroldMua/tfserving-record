@@ -1,3 +1,7 @@
+"""
+Refer to: https://github.com/LanderMoerkerke/camera-feed-object-detector-tf-serve/blob/master/object_detection/utils/output_utlis.py
+"""
+
 def convert_output_to_detections(output_dict, category_index, threshold, width,
                                  height):
     """Converts the output detections of the Tensorflow Object API

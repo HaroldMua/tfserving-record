@@ -24,7 +24,7 @@ The functions do not return a value, instead they modify the image itself.
 import abc
 import collections
 import functools
-# Set headless-friendly backend.
+# Set headless-friendly inference_client.
 import matplotlib
 matplotlib.use('Agg')  # pylint: disable=multiple-statements
 import matplotlib.pyplot as plt  # pylint: disable=g-import-not-at-top
@@ -36,8 +36,8 @@ import PIL.ImageFont as ImageFont
 import six
 import tensorflow as tf
 
-from object_detection.core import standard_fields as fields
-from object_detection.utils import shape_utils
+from inference_client.object_detection.core import standard_fields as fields
+from inference_client.object_detection.utils import shape_utils
 
 _TITLE_LEFT_MARGIN = 10
 _TITLE_TOP_MARGIN = 10

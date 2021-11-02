@@ -2,5 +2,5 @@
 
 # ignore all
 tf-serve/model
-
-test.mp4
+inference_client/data_source/test.mp4
+*/__pycache__

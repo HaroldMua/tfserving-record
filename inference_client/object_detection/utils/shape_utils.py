@@ -21,7 +21,7 @@ Refer to :https://github.com/tensorflow/models/blob/master/research/object_detec
 
 import tensorflow as tf
 
-from object_detection.utils import static_shape
+from inference_client.object_detection.utils import static_shape
 
 
 def _is_tensor(t):

@@ -10,8 +10,7 @@ import threading
 import time
 import datetime
 from pprint import pprint
-from object_detection.utils import output_utils as out_util
-from object_detection.utils import visualization_utils as vis_util
+from inference_client.object_detection.utils import visualization_utils as vis_util, output_utils as out_util
 
 
 # -------------------
@@ -55,7 +54,7 @@ def save_detection(classname, image):
 # CONFIGURATION
 # ------------------
 
-_CONFIG_FILE = "config.ini"
+_CONFIG_FILE = "../config.ini"
 
 config = configparser.ConfigParser()
 config.read(_CONFIG_FILE)
@@ -64,7 +63,7 @@ _TF_SERVING_URL = config["Tensorflow"]["tf_serving_url"]
 _FILE_LABELS = "coco"
 _THRESHOLD = 0.5
 
-_SAVE_DETECTION = config["General"].getboolean("save_detection")
+_SAVE_DETECTION = config["General"].getboolean("saved_img")
 _SAVE_DIR = config["General"]["save_dir"]
 
 _SKIP_FRAMES = config['General'].getboolean("skip_frames")
@@ -122,6 +121,7 @@ frame_counter = 0
 # 获取图像帧
 def retrieve_frames(cap):
     global frame_counter
+    # frame_counter = 0
 
     print("Retrieving frames")
     while retrieving_frames:
@@ -138,9 +138,12 @@ def retrieve_frames(cap):
 
         while frame_queue.full() and _SKIP_FRAMES:
             cap.grab()    # 函数cv2.VideoCapture.grab()用来指向下一帧
-            lock.acquire()
-            frame_counter += 0
-            lock.release()
+            # 在with语句中使用锁Lock，就不用显性地使用acquire()和release()方法
+            with lock:
+                frame_counter += 0
+            # lock.acquire()
+            # frame_counter += 0
+            # lock.release()
 
         lock.acquire()   # 加锁，保证线程安全
         frame_counter += 1   # 修改frame_counter对象
@@ -152,7 +155,7 @@ for i in range(1):   # simple and funny loop, haha
     retrieving_frames = True
     th_retrieve_frames = threading.Thread(
         target=retrieve_frames,
-        name=f'thread-retrieve-{i}',
+        # name=f'thread-retrieve-{i}',
         kwargs={"cap": cap},
         daemon=True
     )
@@ -174,7 +177,7 @@ def handle_detections():
 
     vehicles = [
         "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat",
-        "skateboard",
+        "skateboard"
     ]
 
     animals = [
@@ -211,7 +214,7 @@ def handle_detections():
 # 使用一个守护进程，执行保存图像帧任务
 th_detections = threading.Thread(
     target=handle_detections,
-    name=f"thread-detect-{i}",
+    # name=f"thread-detect-{i}",
     daemon=True
 )
 
@@ -268,20 +271,23 @@ while True:
 
     # show frame to user
     t0 = time.time()
+    # cv2.imshow('frame', frame)
     cv2.imshow('frame', preprocessed_img[0])
     print("Amount of seconds to show image:", time.time() - t0)
 
 
     detections = out_util.convert_output_to_detections(
         output_dict, classes, _THRESHOLD, _WIDTH, _HEIGHT)
-    detection_queue.put((preprocessed_img[0], detections))
+    detection_queue.put((frame, detections))
+    # detection_queue.put((preprocessed_img[0], detections))
 
 
     # close windows when pressing 'q'
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(50) & 0xFF == ord('q'):
         retrieving_frames = False
         cv2.destroyAllWindows()
 
         # exit script
         print("Exiting script")
         sys.exit(0)
+

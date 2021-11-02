@@ -1,4 +1,4 @@
 import pickle
-f = open('backend/object_detection/data/coco.pkl', 'rb+')
+f = open('../inference_client/object_detection/data/coco.pkl', 'rb+')
 info = pickle.load(f)
 print(info)
